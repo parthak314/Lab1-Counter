@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Setup USB device (VBuddy)
+~/Documents/iac/lab0-devtools/tools/attach_usb.sh
+
 # cleanup
 rm -rf obj_dir
 rm -f counter.vcd
