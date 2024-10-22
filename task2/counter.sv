@@ -10,7 +10,6 @@ module counter #(
 
 // Internal register to halt counting
 always_ff @(posedge clk or posedge rst) begin
-    if (count )
     if (rst) count <= {WIDTH{1'b0}};
     else     count <= count + {{WIDTH-1{1'b0}}, en};
 end
