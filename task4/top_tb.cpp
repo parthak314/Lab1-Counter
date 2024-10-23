@@ -1,7 +1,7 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
-#include "Vcounter.h"
+#include "Vtop.h"        // Change this to Vtop.h instead of Vcounter.h
 #include "verilated.h"
 #include "verilated_vcd_c.h"
 #include "vbuddy.cpp"
@@ -13,7 +13,7 @@ int main(int argc, char **argv, char **env) {
     Verilated::commandArgs(argc, argv);
 
     // init top verilog instance
-    Vcounter* top = new Vcounter;
+    Vtop* top = new Vtop;   // Instantiate Vtop instead of Vcounter
 
     // init trace dump
     Verilated::traceEverOn(true);
@@ -29,7 +29,7 @@ int main(int argc, char **argv, char **env) {
     top->clk = 1;
     top->rst = 1;
     top->en = 0;
-    top->v = vbdValue();
+    top->v = vbdValue();  // Input value to preload
     vbdSetMode(1);
 
     // run simulation for many clock cycles
@@ -43,11 +43,11 @@ int main(int argc, char **argv, char **env) {
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         
         // +++++++ Send count value to Vbuddy
-        vbdHex(4, (int(top->count) >> 16) & 0xF);
-        vbdHex(3, (int(top->count) >> 8) & 0xF);
-        vbdHex(2, (int(top->count) >> 4) & 0xF);
-        vbdHex(1, int(top->count) & 0xF);
-        // vbdPlot(int(top->count), 0, 255);
+        vbdHex(4, (int(top->bcd) >> 16) & 0xF);  // Updated to 'bcd' from 'count'
+        vbdHex(3, (int(top->bcd) >> 8) & 0xF);
+        vbdHex(2, (int(top->bcd) >> 4) & 0xF);
+        vbdHex(1, int(top->bcd) & 0xF);          // Updated from 'count' to 'bcd'
+        // vbdPlot(int(top->bcd), 0, 255);        // Updated for BCD output
         vbdCycle(i+1);
 
         top->rst = (i < 2) | (i == 15);
