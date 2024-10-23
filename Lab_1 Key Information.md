@@ -1,4 +1,5 @@
 ## Task 1 - Simulate an 8-bit binary counter
+Partha Khanna
 #### Verilog Script
 `always_ff @ (posedge clk) begin
 - Triggered on rising edge of clock signal
