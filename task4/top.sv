@@ -14,7 +14,8 @@ module top #(
 counter myCounter (
   .clk (clk),
   .rst (rst),
-  .en (en),
+  .ld  (en),    // Correctly map 'en' to 'ld' of the counter
+  .v   (v),     // Load value
   .count (count)
 );
 
